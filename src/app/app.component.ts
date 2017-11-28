@@ -1,14 +1,6 @@
-import { Component } from '@angular/core';
-import {Hero} from './hero';
-
-const HEROES: Hero[] = [
-	{id: 1, name: 'liuhui', single: true},
-	{id: 2, name: 'zhangsan', single: true},
-	{id: 3, name: 'lisi', single: false},
-	{id: 4, name: 'wangwu', single: false},
-	{id: 5, name: 'maliu', single: true},
-	{id: 6, name: 'zhaoqi', single: false}
-];
+import { Component, OnInit } from '@angular/core';
+import { Hero } from './hero';
+import { HeroService } from './hero.service';
 
 @Component({
   selector: 'my-app',
@@ -70,12 +62,24 @@ const HEROES: Hero[] = [
     margin-right: .8em;
     border-radius: 4px 0 0 4px;
   }
-`]
+`],
+providers: [HeroService] //声明组件所依赖的服务
 })
-export class AppComponent  {
+export class AppComponent implements OnInit{
   title = 'Tour of heroes';
 	selectedHero: Hero;
-	heroes = HEROES;
+	heroes: Hero[];
+
+  constructor(private heroService: HeroService){
+
+  }
+
+  ngOnInit(): void {
+    console.log('----init----');
+    this.heroService.getHeroes()
+        .then(heroes => this.heroes = heroes)
+        .catch(e => console.log(e.message));
+  }
 
   onSelect(hero: Hero) {
     this.selectedHero = hero;

@@ -10,20 +10,28 @@ const HEROES: Hero[] = [
 	{id: 6, name: 'zhaoqi', single: false}
 ];
 
+//英雄数据服务
 @Injectable()
 export class HeroService {
 	
+	//获取英雄列表
 	getHeroes(): Promise<Hero[]> {
 		return new Promise(function(resolve, reject) {
 			setTimeout(()=> {
 				//随机返回正确结果或错误
-				let rand = Math.random();
+				let rand = Math.random() + 1;
 				if (rand > 0.5) {
 					resolve(HEROES);
 				} else {
 					reject(new Error('糟糕,又出Bug了'));
 				}
-			},3000);
+			},1000);
 		});
+	}
+
+	//获取英雄详情
+	getHero(id: number): Promise<Hero> {
+		return this.getHeroes()
+				.then(heroes => heroes.find(hero => hero.id === id));
 	}
 }

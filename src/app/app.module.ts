@@ -19,7 +19,7 @@ import { HeroService } from './hero.service';
   	])
    ],
   declarations: [ AppComponent, HeroesComponent,HeroDetailComponent,DashboardComponent ],
-  providers:	[ HeroService ]
+  providers:	[ HeroService ],
   bootstrap:    [ AppComponent ]
 })
 export class AppModule { }
